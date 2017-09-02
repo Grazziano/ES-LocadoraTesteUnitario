@@ -2,6 +2,8 @@ package local.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import static local.utils.DataUtils.isMesmaData;
 import static local.utils.DataUtils.obterDataComDiferencaDias;
 import static org.hamcrest.CoreMatchers.is;
@@ -18,7 +20,10 @@ import local.entities.Locacao;
 import local.entities.Usuario;
 import local.exceptions.FilmeSemEstoqueException;
 import local.exceptions.LocadoraException;
+import local.utils.DataUtils;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 
 public class LocacaoServiceTest {
 
@@ -38,6 +43,7 @@ public class LocacaoServiceTest {
     @Test
     public void testeDataDeRetorno() throws Exception {
         //cenario
+        Assume.assumeTrue(!DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
         locacaoService = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
         Filme filme = new Filme("Filme 1", 1, 5.0);
@@ -159,5 +165,23 @@ public class LocacaoServiceTest {
 
         //assertEquals(13, locacao.getValor(), 0.01);
         assertThat(locacao.getValor(), is(13.0));
+    }
+    
+    @Test
+    //@Ignore
+    public void deveEntregarNaSegundaQuandoAlugarSabado() 
+            throws FilmeSemEstoqueException, LocadoraException{
+        //Cenário
+        Assume.assumeTrue(DataUtils.verificarDiaSemana(new Date(), Calendar.SATURDAY));
+        Usuario usuario = new Usuario("Angelo");
+        
+        //Ação
+        Locacao locacao = locacaoService.alugarFilme(usuario, Arrays.asList(
+                new Filme("Embalos de sábado a noite",2,4.0)));
+        
+        //Validação
+        boolean isSegunda = DataUtils.verificarDiaSemana(locacao.getDataRetorno(),
+                Calendar.MONDAY);
+        assertEquals(true,isSegunda);
     }
 }
