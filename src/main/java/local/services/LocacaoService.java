@@ -52,6 +52,7 @@ public class LocacaoService {
             }
             locacao.setDataRetorno(dataEntrega);
             //.....
+            //Persisti locação no banco
         }
         locacao.setValor(valorTotal);
         locacao.setUsuario(usuario);
