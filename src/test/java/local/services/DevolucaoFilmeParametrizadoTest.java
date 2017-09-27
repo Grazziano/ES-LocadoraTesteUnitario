@@ -1,7 +1,6 @@
 package local.services;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import local.entities.Filme;
 import local.entities.Locacao;
@@ -36,7 +35,7 @@ public class DevolucaoFilmeParametrizadoTest {
      *
      * @return
      */
-    @Parameters
+    @Parameters (name = "{2}")
     public static List<Object[]> parametrosDeExecucao() {
 
         Filme filme1 = new Filme("Piratas do Vale do Silício", 4, 4.0);
@@ -47,11 +46,16 @@ public class DevolucaoFilmeParametrizadoTest {
         Filme filme6 = new Filme("Diomelo e seus dois maridos", 2, 4.0);
         // Cada array representa um caso de teste
         return Arrays.asList(new Object[][]{
-            {Arrays.asList(filme1, filme2), 8.0},
-            {Arrays.asList(filme1, filme2, filme3), 11.0},
-            {Arrays.asList(filme1, filme2, filme3, filme4), 13.0},
-            {Arrays.asList(filme1, filme2, filme3, filme4, filme5), 13.0},
-            {Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6), 17.0}
+            {Arrays.asList(filme1, filme2), 8.0,
+                "Teste Locacao sem desconto"},
+            {Arrays.asList(filme1, filme2, filme3), 11.0,
+                "Teste Locacao com desconto de 25% no terceiro filme"},
+            {Arrays.asList(filme1, filme2, filme3, filme4), 13.0,
+                "Teste Locacao com desconto de 50% no quarto filme"},
+            {Arrays.asList(filme1, filme2, filme3, filme4, filme5), 13.0,
+                "Teste Locacao com desconto de 100% no quinto filme"},
+            {Arrays.asList(filme1, filme2, filme3, filme4, filme5, filme6), 17.0, 
+                "Teste Locacao do sexto filme sem desconto"}
         });
     }
 
@@ -60,6 +64,8 @@ public class DevolucaoFilmeParametrizadoTest {
     public List<Filme> filmes;// Parameter deve ser público para acesso pelo JUnit
     @Parameter(1)
     public Double valorLocacao;// Parameter deve ser público para acesso pelo JUnit
+    @Parameter(2)
+    public String descricao;// Parameter deve ser público para acesso pelo JUnit
 
     @Test
     public void deveVerificarValorDeDevolucao() throws FilmeSemEstoqueException,

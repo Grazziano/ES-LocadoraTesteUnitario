@@ -101,7 +101,8 @@ public class LocacaoServiceTest {
     }
 
     @Test
-    public void testLocacaoMultiplosFilmes() throws FilmeSemEstoqueException, LocadoraException {
+    public void testLocacaoMultiplosFilmes() throws FilmeSemEstoqueException, 
+            LocadoraException {
         //cenario
         locacaoService = new LocacaoService();
         Usuario usuario = new Usuario("Usuario 1");
@@ -158,12 +159,9 @@ public class LocacaoServiceTest {
                 new Filme("Duro de Matar 4", 11, 4.0),
                 new Filme("Lagoa Azul", 2, 4.0),
                 new Filme("A Trança dos Carecas", 2, 4.0));
-
         //Ação
         Locacao locacao = locacaoService.alugarFilme(usuario, filmes);
         //Validação
-
-        //assertEquals(13, locacao.getValor(), 0.01);
         assertThat(locacao.getValor(), is(13.0));
     }
     
