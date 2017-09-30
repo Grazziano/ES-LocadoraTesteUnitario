@@ -1,6 +1,5 @@
 package local.entities;
 
-import local.entities.Usuario;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,9 +11,9 @@ import static org.junit.Assert.*;
  *
  * @author Angelo
  */
-public class FilmeTest {
+public class UsuarioTest {
 
-    public FilmeTest() {
+    public UsuarioTest() {
     }
 
     @BeforeClass
@@ -41,7 +40,7 @@ public class FilmeTest {
      * @Date 12/09/2017
      */
     @Test
-    public void deveConsiderarFilmesIguais() {
+    public void deveConsiderarUsuariosIguais() {
         Usuario user1 = new Usuario("Angelo");
         Usuario user2 = new Usuario("Angelo");
         assertTrue(user1.equals(user2));

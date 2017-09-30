@@ -2,7 +2,7 @@ package local.entities;
 
 public class Filme {
 
-    private String nome;
+    private String nome; 
     private Integer estoque;
     private Double precoLocacao;
 
